@@ -1,0 +1,28 @@
+<%= form_for @user, registration_path(@conn, :create), [as: :registration], fn f -> %>
+  <div class="alert alert-danger">
+    <ul>
+      <%= for {attr, message} <- f.errors do %>
+        <li><%= humanize(attr) %> <%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>Name</label>
+    <%= text_input f, :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <%= text_input f, :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+    <%= password_input f, :password, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Signup", class: "btn btn-primary" %>
+  </div>
+<% end %>
