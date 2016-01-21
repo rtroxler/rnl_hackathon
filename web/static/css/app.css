@@ -21,13 +21,14 @@ form.link, form.button {
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
+  font-size: 13px;
 }
 .logo {
   width: 519px;
   height: 71px;
   display: inline-block;
   margin-bottom: 1em;
-  background-image: url("/images/phoenix.png");
+  background-image: url("/images/rnl_logo.png");
   background-size: 519px 71px;
 }
 
