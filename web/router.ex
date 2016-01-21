@@ -18,6 +18,8 @@ defmodule RnlHackathon.Router do
 
     get "/", PageController, :index
 
+    resources "/ideas", IdeaController
+
     # For Passport
     get "/login", SessionController, :new
     post "/login", SessionController, :create

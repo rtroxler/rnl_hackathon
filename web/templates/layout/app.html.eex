@@ -7,13 +7,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello RnlHackathon!</title>
+    <title>RNL Hackathon</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
     <div class="container">
-      <header class="header">
+      <header>
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <%= if logged_in?(@conn) do %>
@@ -27,7 +27,6 @@
             <% end %>
           </ul>
         </nav>
-        <span class="logo"></span>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

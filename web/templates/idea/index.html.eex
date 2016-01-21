@@ -1,0 +1,32 @@
+<h2>Hackathon Ideas</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>User</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for idea <- @ideas do %>
+    <tr>
+      <td><%= idea.name %></td>
+      <td><%= idea.description %></td>
+      <td><%= idea.user.name %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: idea_path(@conn, :show, idea), class: "btn btn-default btn-xs" %>
+        <%= if logged_in?(@conn) && can_edit_idea(idea, current_user(@conn).id) do %>
+          <%= link "Edit", to: idea_path(@conn, :edit, idea), class: "btn btn-default btn-xs" %>
+          <%= link "Delete", to: idea_path(@conn, :delete, idea), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <% end %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New idea", to: idea_path(@conn, :new) %>
