@@ -49,6 +49,8 @@ defmodule RnlHackathon.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      import Passport.SessionManager, only: [current_user: 1, logged_in?: 1]
+
       import RnlHackathon.Router.Helpers
       import RnlHackathon.ErrorHelpers
       import RnlHackathon.Gettext
