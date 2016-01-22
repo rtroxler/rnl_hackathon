@@ -14,10 +14,13 @@
   </thead>
   <tbody>
     <%= for idea <- Enum.sort(@ideas, &(Idea.vote_count(&1) > Idea.vote_count(&2))) do %>
-  <%= tag :meta, name: "channel_token", content: Phoenix.Token.sign(@conn, "idea", idea.id) %>
 
     <tr>
-      <td><button type="button" class="btn btn-default btn-xs" data-button='{"idea_id": <%= idea.id %>, "value": 1}'>Vote</button></td>
+      <%= if logged_in?(@conn) do %>
+          <td><button type="button" class="btn btn-default btn-xs" data-button='{"idea_id": <%= idea.id %>, "value": 1}'>Vote</button></td>
+      <% else %>
+          <td></td>
+      <% end %>
       <td><span id="idea-<%= idea.id %>"><%= Idea.vote_count(idea) %></span></td>
       <td><%= idea.name %></td>
       <td><%= idea.description %></td>
@@ -31,7 +34,7 @@
         <% end %>
       </td>
     </tr>
-<% end %>
+    <% end %>
   </tbody>
 </table>
 
