@@ -13,18 +13,18 @@
     </tr>
   </thead>
   <tbody>
-<%= for idea <- @ideas do %>
+    <%= for idea <- Enum.sort(@ideas, &(Idea.vote_count(&1) > Idea.vote_count(&2))) do %>
   <%= tag :meta, name: "channel_token", content: Phoenix.Token.sign(@conn, "idea", idea.id) %>
 
     <tr>
-      <td><button type="button" data-button='{"idea_id": <%= idea.id %>, "value": 1}'>Vote</button></td>
+      <td><button type="button" class="btn btn-default btn-xs" data-button='{"idea_id": <%= idea.id %>, "value": 1}'>Vote</button></td>
       <td><span id="idea-<%= idea.id %>"><%= Idea.vote_count(idea) %></span></td>
       <td><%= idea.name %></td>
       <td><%= idea.description %></td>
       <td><%= idea.user.name %></td>
 
       <td class="text-right">
-        <%= link "Show", to: idea_path(@conn, :show, idea), class: "btn btn-default btn-xs" %>
+        <%= link "See More", to: idea_path(@conn, :show, idea), class: "btn btn-default btn-xs" %>
         <%= if logged_in?(@conn) && can_edit_idea(idea, current_user(@conn).id) do %>
           <%= link "Edit", to: idea_path(@conn, :edit, idea), class: "btn btn-default btn-xs" %>
           <%= link "Delete", to: idea_path(@conn, :delete, idea), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>

@@ -3,6 +3,7 @@ defmodule RnlHackathon.RegistrationController do
 
   alias RnlHackathon.User
   alias Passport.RegistrationManager
+  alias Passport.SessionManager
 
   def new(conn, _params) do
     user = User.changeset(%User{})
@@ -16,10 +17,22 @@ defmodule RnlHackathon.RegistrationController do
     case RegistrationManager.register(registration_params) do
       {:ok, changeset} -> conn
          |> put_flash(:info, "Registration success")
-         |> redirect(to: page_path(conn, :index))
+         |> login(registration_params)
       {:error, changeset}-> conn
          |> render("new.html", user: changeset)
     end
   end
 
+  def login(conn, params) do
+    case SessionManager.login(conn, params) do
+      {:ok, conn, user} ->
+        conn
+        |> put_flash(:info, "Logged in")
+        |> redirect(to: page_path(conn, :index))
+      {:error, conn} ->
+        conn
+        |> put_flash(:info, "Registered, but error logging in?")
+        |> render(:new)
+    end
+  end
 end
