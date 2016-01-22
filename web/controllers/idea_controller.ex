@@ -1,13 +1,19 @@
 defmodule RnlHackathon.IdeaController do
   use RnlHackathon.Web, :controller
+  import Passport.SessionManager, only: [current_user: 1, logged_in?: 1]
 
   alias RnlHackathon.Idea
 
   plug :scrub_params, "idea" when action in [:create, :update]
 
   def index(conn, _params) do
+    # this should really be done higher up.. but I can't access current user in router?
+    token = Phoenix.Token.sign(conn, "user socket", current_user(conn).id)
     ideas = Idea |> Repo.all |> Repo.preload [:user]
-    render(conn, "index.html", ideas: ideas)
+    conn
+    |> assign(:user_token, token)
+    |> render(:index, ideas: ideas)
+    #render(conn, "index.html", ideas: ideas)
   end
 
   def new(conn, _params) do

@@ -5,7 +5,12 @@
 // and connect at the socket path in "lib/my_app/endpoint.ex":
 import {Socket} from "phoenix"
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let params = {}
+let user_token = $("meta[name=user_token]").attr("content")
+if (user_token != undefined) {
+  params = {token: user_token}
+}
+let socket = new Socket("/socket", { params: params })
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -54,7 +59,14 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+let channel = socket.channel("ideas:index", {})
+
+$('button').click(function() {
+  let data = $.parseJSON($(this).attr('data-button'));
+  console.log("clicked!", data)
+  channel.push("new_vote", {body: data})
+})
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })

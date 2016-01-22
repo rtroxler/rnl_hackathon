@@ -2,11 +2,11 @@ defmodule RnlHackathon.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", RnlHackathon.RoomChannel
+   channel "ideas:*", RnlHackathon.IdeaChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
-  # transport :longpoll, Phoenix.Transports.LongPoll
+  transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -19,6 +19,23 @@ defmodule RnlHackathon.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
+  #def connect(params, socket) do
+    #potato = 1
+    #require IEx
+    #IEx.pry
+    #{:ok, socket}
+  #end
+
+  def connect(%{"token" => token}, socket) do
+    # max_age: 1209600 is equivalent to two weeks in seconds
+    case Phoenix.Token.verify(socket, "user_id", token, max_age: 1209600) do
+      {:ok, user_id} ->
+        {:ok, assign(socket, :user, user_id)}
+      {:error, reason} ->
+        :error
+    end
+  end
+
   def connect(_params, socket) do
     {:ok, socket}
   end

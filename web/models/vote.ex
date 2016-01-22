@@ -2,6 +2,7 @@ defmodule RnlHackathon.Vote do
   use RnlHackathon.Web, :model
 
   schema "votes" do
+    field :vote_value, :integer
     field :value, :string
     belongs_to :user, RnlHackathon.User
     belongs_to :idea, RnlHackathon.Idea
@@ -9,7 +10,7 @@ defmodule RnlHackathon.Vote do
     timestamps
   end
 
-  @required_fields ~w(value)
+  @required_fields ~w(user_id idea_id vote_value)
   @optional_fields ~w()
 
   @doc """
