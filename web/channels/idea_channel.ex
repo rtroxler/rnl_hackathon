@@ -1,6 +1,7 @@
 defmodule RnlHackathon.IdeaChannel do
   use RnlHackathon.Web, :channel
   alias RnlHackathon.Vote
+  alias RnlHackathon.Idea
 
   def join("ideas:index", params, socket) do
     {:ok, socket.assigns[:user], socket}
@@ -20,7 +21,8 @@ defmodule RnlHackathon.IdeaChannel do
         RnlHackathon.Repo.update!(updated_vote)
     end
 
-    broadcast! socket, "new_vote", %{body: body}
+    idea = Repo.get(Idea, idea_id)
+    broadcast! socket, "vote_count_update", %{idea_id: idea_id, vote_count: Idea.vote_count(idea)}
 
     # broadcast vote update for idea_id, rather than new_vote
     # have handle_out listen for vote_count_update, and in socket.js listen for that and update the idea's vote value

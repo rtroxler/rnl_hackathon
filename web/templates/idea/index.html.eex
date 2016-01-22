@@ -18,7 +18,7 @@
 
     <tr>
       <td><button type="button" data-button='{"idea_id": <%= idea.id %>, "value": 1}'>Vote</button></td>
-      <td><%= Idea.vote_count(idea) %></td>
+      <td><span id="idea-<%= idea.id %>"><%= Idea.vote_count(idea) %></span></td>
       <td><%= idea.name %></td>
       <td><%= idea.description %></td>
       <td><%= idea.user.name %></td>

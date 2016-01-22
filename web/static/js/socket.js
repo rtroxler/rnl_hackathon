@@ -67,6 +67,11 @@ $('button').click(function() {
   channel.push("new_vote", {body: data})
 })
 
+channel.on("vote_count_update", payload => {
+  let idea_id = payload["idea_id"]
+  $("#idea-"+idea_id).text(payload["vote_count"])
+})
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })

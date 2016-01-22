@@ -7,8 +7,11 @@ defmodule RnlHackathon.IdeaController do
   plug :scrub_params, "idea" when action in [:create, :update]
 
   def index(conn, _params) do
-    # this should really be done higher up.. but I can't access current user in router?
-    token = Phoenix.Token.sign(conn, "user socket", current_user(conn).id)
+    token = case current_user(conn) do
+      false -> nil
+      user -> Phoenix.Token.sign(conn, "user socket", user.id)
+    end
+
     ideas = Idea |> Repo.all |> Repo.preload [:user, :votes]
     conn
     |> assign(:user_token, token)
