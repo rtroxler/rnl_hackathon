@@ -9,7 +9,7 @@ defmodule RnlHackathon.IdeaController do
   def index(conn, _params) do
     # this should really be done higher up.. but I can't access current user in router?
     token = Phoenix.Token.sign(conn, "user socket", current_user(conn).id)
-    ideas = Idea |> Repo.all |> Repo.preload [:user]
+    ideas = Idea |> Repo.all |> Repo.preload [:user, :votes]
     conn
     |> assign(:user_token, token)
     |> render(:index, ideas: ideas)

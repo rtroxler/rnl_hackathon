@@ -1,10 +1,14 @@
 defmodule RnlHackathon.Idea do
   use RnlHackathon.Web, :model
+  alias RnlHackathon.Repo
+  import Ecto
+  import Ecto.Query
 
   schema "ideas" do
     field :name, :string
     field :description, :string
     belongs_to :user, RnlHackathon.User
+    has_many :votes, RnlHackathon.Vote
 
     timestamps
   end
@@ -21,5 +25,10 @@ defmodule RnlHackathon.Idea do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def vote_count(idea) do
+    query = from v in assoc(idea, :votes), select: sum(v.vote_value)
+    Repo.one(query)
   end
 end
