@@ -28,7 +28,7 @@ defmodule RnlHackathon.RegistrationController do
       {:ok, conn, user} ->
         conn
         |> put_flash(:info, "Logged in")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: idea_path(conn, :index))
       {:error, conn} ->
         conn
         |> put_flash(:info, "Registered, but error logging in?")

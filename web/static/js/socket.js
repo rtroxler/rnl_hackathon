@@ -63,9 +63,31 @@ let channel = socket.channel("ideas:index", {})
 
 $('button').click(function() {
   let data = $.parseJSON($(this).attr('data-button'));
+
+  if ($(this).hasClass("btn-default")) {
+    let upvoted = data["value"] == 1
+    $(this).removeClass("btn-default");
+    $(this).addClass(upvoted ? "btn-primary" : "btn-warning");
+
+    if (upvoted) {
+      $(this).next().removeClass('btn-warning').addClass('btn-default');
+
+    } else {
+      $(this).prev().removeClass('btn-primary').addClass('btn-default');
+    }
+  } else {
+    $(this).removeClass(data["value"] == 1 ? "btn-primary" : "btn-warning");
+    $(this).addClass("btn-default");
+    data["value"] = 0;
+  }
+
   console.log("clicked!", data)
   channel.push("new_vote", {body: data})
 })
+
+function colorizeButtons(data, this_btn) {
+
+}
 
 channel.on("vote_count_update", payload => {
   let idea_id = payload["idea_id"]

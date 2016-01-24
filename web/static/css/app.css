@@ -77,3 +77,16 @@ form.link, form.button {
     border-bottom: 0;
   }
 }
+
+button.btn.btn-xs.btn-vote.fa.fa-arrow-up{
+  display: block;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.title-tip {
+  padding-top: 5px;
+}

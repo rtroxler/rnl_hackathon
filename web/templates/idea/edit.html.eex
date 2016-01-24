@@ -5,3 +5,4 @@
                         action: idea_path(@conn, :update, @idea) %>
 
 <%= link "Back", to: idea_path(@conn, :index) %>
+<%= link "Delete", to: idea_path(@conn, :delete, @idea), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>

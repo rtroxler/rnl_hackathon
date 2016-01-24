@@ -8,7 +8,7 @@ defmodule RnlHackathon.Idea do
     field :name, :string
     field :description, :string
     belongs_to :user, RnlHackathon.User
-    has_many :votes, RnlHackathon.Vote
+    has_many :votes, RnlHackathon.Vote, on_delete: :delete_all
 
     timestamps
   end

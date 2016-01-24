@@ -38,7 +38,7 @@ defmodule RnlHackathon.IdeaController do
   end
 
   def show(conn, %{"id" => id}) do
-    idea = Repo.get!(Idea, id)
+    idea = Idea|> Repo.get!(id) |> Repo.preload [:user]
     render(conn, "show.html", idea: idea)
   end
 

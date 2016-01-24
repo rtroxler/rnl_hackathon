@@ -1,23 +1,23 @@
-<h2>Show idea</h2>
+<h2>
+  <%= @idea.name %>
+</h2>
 
-<ul>
+<div>
+  <%= @idea.description %>
+</div>
+</br>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @idea.name %>
-  </li>
+<div>
+  <strong>Submitted By: </strong>
+  <%= @idea.user.name %>
+</div>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @idea.description %>
-  </li>
+<%# If there are any interested users, display them here  %>
+<%# Any comments here %>
 
-  <li>
-    <strong>User:</strong>
-    <%= @idea.user_id %>
-  </li>
-
-</ul>
-
-<%= link "Edit", to: idea_path(@conn, :edit, @idea) %>
+<div>
+<%= if logged_in?(@conn) && can_edit_idea(@idea, current_user(@conn).id) do %>
+  <%= link "Edit", to: idea_path(@conn, :edit, @idea) %>
+<% end %>
 <%= link "Back", to: idea_path(@conn, :index) %>
+</div>

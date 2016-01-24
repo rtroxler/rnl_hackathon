@@ -12,7 +12,7 @@ defmodule RnlHackathon.SessionController do
       {:ok, conn, user} ->
         conn
         |> put_flash(:info, "Login successful.")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(to: idea_path(conn, :index))
       {:error, conn} ->
         conn
         |> put_flash(:error, "Email or password incorrect.")
@@ -23,6 +23,6 @@ defmodule RnlHackathon.SessionController do
   def delete(conn, _params) do
     SessionManager.logout(conn)
     |> put_flash(:info, "Log out successful")
-    |> redirect(to: page_path(conn, :index))
+    |> redirect(to: idea_path(conn, :index))
   end
 end

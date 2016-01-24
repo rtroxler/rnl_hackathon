@@ -3,7 +3,6 @@ defmodule RnlHackathon.Vote do
 
   schema "votes" do
     field :vote_value, :integer
-    field :value, :string
     belongs_to :user, RnlHackathon.User
     belongs_to :idea, RnlHackathon.Idea
 

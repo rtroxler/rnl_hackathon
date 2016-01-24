@@ -1,4 +1,13 @@
-<h2>Hackathon Ideas</h2>
+<div>
+  <span class='title'>Hackathon Ideas</span>
+    <span class="pull-right">
+  <%= if logged_in?(@conn) do %>
+      <%= link "New idea", to: idea_path(@conn, :new), class: "btn btn-primary btn-s"%>
+    <% else %>
+      <p class='title-tip'>Log in or register to create and vote on ideas!</p>
+  <% end %>
+    </span>
+</div>
 
 <table class="table">
   <thead>
@@ -6,36 +15,35 @@
       <th></th>
       <th>Votes</th>
       <th>Name</th>
-      <th>Description</th>
       <th>Submitted By</th>
-
-      <th></th>
     </tr>
   </thead>
   <tbody>
     <%= for idea <- Enum.sort(@ideas, &(Idea.vote_count(&1) > Idea.vote_count(&2))) do %>
 
-    <tr>
+    <tr class="idea-row">
       <%= if logged_in?(@conn) do %>
-          <td><button type="button" class="btn btn-default btn-xs" data-button='{"idea_id": <%= idea.id %>, "value": 1}'>Vote</button></td>
+        <td>
+          <div class='vote-buttons'>
+            <button type="button" class="<%= class_for_vote_buttons(idea.id, current_user(@conn).id, 1) %> fa fa-arrow-up" data-button='{"idea_id": <%= idea.id %>, "value": 1}'></button>
+            <button type="button" class="<%= class_for_vote_buttons(idea.id, current_user(@conn).id, -1) %> fa fa-arrow-down" data-button='{"idea_id": <%= idea.id %>, "value": -1}'></button>
+          </div>
+        </td>
       <% else %>
           <td></td>
       <% end %>
       <td><span id="idea-<%= idea.id %>"><%= Idea.vote_count(idea) %></span></td>
       <td><%= idea.name %></td>
-      <td><%= idea.description %></td>
       <td><%= idea.user.name %></td>
 
       <td class="text-right">
-        <%= link "See More", to: idea_path(@conn, :show, idea), class: "btn btn-default btn-xs" %>
         <%= if logged_in?(@conn) && can_edit_idea(idea, current_user(@conn).id) do %>
           <%= link "Edit", to: idea_path(@conn, :edit, idea), class: "btn btn-default btn-xs" %>
-          <%= link "Delete", to: idea_path(@conn, :delete, idea), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
         <% end %>
+        <%= link "See More", to: idea_path(@conn, :show, idea), class: "btn btn-default btn-xs" %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link "New idea", to: idea_path(@conn, :new) %>
