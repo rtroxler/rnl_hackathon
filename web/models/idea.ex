@@ -29,6 +29,9 @@ defmodule RnlHackathon.Idea do
 
   def vote_count(idea) do
     query = from v in assoc(idea, :votes), select: sum(v.vote_value)
-    Repo.one(query)
+    case Repo.one(query) do
+      nil -> 0
+      count -> count
+    end
   end
 end
