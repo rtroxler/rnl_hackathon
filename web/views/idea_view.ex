@@ -1,5 +1,6 @@
 defmodule RnlHackathon.IdeaView do
   use RnlHackathon.Web, :view
+  alias RnlHackathon.Interest
   alias RnlHackathon.Idea
   alias RnlHackathon.Vote
   import Ecto
@@ -17,5 +18,17 @@ defmodule RnlHackathon.IdeaView do
       vote -> if val == 1, do: "btn-primary", else: "btn-warning"
     end
     "btn " <> extra_class <> " btn-xs btn-vote"
+  end
+
+  def user_interest_buttons conn, idea, user_id do
+    case RnlHackathon.Repo.get_by(Interest, user_id: user_id, idea_id: idea.id) do
+      nil      -> button "No",
+                  to: idea_interest_path(conn, :create, idea),
+                  class: "btn btn-default btn-xs"
+      interest -> button "Yes",
+                  to: idea_interest_path(conn, :delete, idea, interest),
+                  method: :delete,
+                  class: "btn btn-primary btn-xs"
+    end
   end
 end

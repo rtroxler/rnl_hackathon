@@ -16,7 +16,6 @@ defmodule RnlHackathon.IdeaController do
     conn
     |> assign(:user_token, token)
     |> render(:index, ideas: ideas)
-    #render(conn, "index.html", ideas: ideas)
   end
 
   def new(conn, _params) do

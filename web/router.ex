@@ -18,7 +18,9 @@ defmodule RnlHackathon.Router do
 
     get "/", IdeaController, :index
 
-    resources "/ideas", IdeaController
+    resources "/ideas", IdeaController do
+      resources "interests", InterestController, only: [:create, :delete]
+    end
 
     # For Passport
     get "/login", SessionController, :new

@@ -10,6 +10,18 @@ body, form, ul, table {
   margin-bottom: 20px;
 }
 
+.vote-col {
+  width: 50px;
+  max-width: 50px;
+}
+
+.name-col {
+  width: 310px;
+  max-width: 310px;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
 /* Phoenix flash messages */
 .alert:empty { display: none; }
 
@@ -42,7 +54,7 @@ form.link, form.button {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 770px;
   }
 }
 .container-narrow > hr {

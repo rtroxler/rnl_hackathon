@@ -80,14 +80,8 @@ $('button').click(function() {
     $(this).addClass("btn-default");
     data["value"] = 0;
   }
-
-  console.log("clicked!", data)
   channel.push("new_vote", {body: data})
 })
-
-function colorizeButtons(data, this_btn) {
-
-}
 
 channel.on("vote_count_update", payload => {
   let idea_id = payload["idea_id"]
@@ -95,7 +89,7 @@ channel.on("vote_count_update", payload => {
 })
 
 channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("ok", resp => {})
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 export default socket
