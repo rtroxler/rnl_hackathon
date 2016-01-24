@@ -3,6 +3,7 @@ defmodule RnlHackathon.IdeaController do
   import Passport.SessionManager, only: [current_user: 1, logged_in?: 1]
 
   alias RnlHackathon.Idea
+  alias RnlHackathon.Interest
 
   plug :scrub_params, "idea" when action in [:create, :update]
 
@@ -37,8 +38,16 @@ defmodule RnlHackathon.IdeaController do
   end
 
   def show(conn, %{"id" => id}) do
-    idea = Idea|> Repo.get!(id) |> Repo.preload [:user]
-    render(conn, "show.html", idea: idea)
+    idea = Idea |> Repo.get!(id) |> Repo.preload [:user, :interests]
+
+    query = from(int in assoc(idea, :interests),
+                 left_join: user in assoc(int, :user),
+                 select: user)
+    users = Repo.all(query)
+
+    conn
+    |> assign(:interested_users, users)
+    |> render(:show, idea: idea)
   end
 
   def edit(conn, %{"id" => id}) do

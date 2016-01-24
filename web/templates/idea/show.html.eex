@@ -5,12 +5,26 @@
 <div>
   <%= @idea.description %>
 </div>
+
 </br>
 
 <div>
   <strong>Submitted By: </strong>
   <%= @idea.user.name %>
 </div>
+
+</br>
+
+<%= if @interested_users != [] do %>
+  <div>
+    <strong>People who are interested in this idea: </strong>
+    <ul>
+    <%= for user <- @interested_users do %>
+      <li><%= user.name %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 
 <%# If there are any interested users, display them here  %>
 <%# Any comments here %>
@@ -19,5 +33,5 @@
 <%= if logged_in?(@conn) && can_edit_idea(@idea, current_user(@conn).id) do %>
   <%= link "Edit", to: idea_path(@conn, :edit, @idea) %>
 <% end %>
-<%= link "Back", to: idea_path(@conn, :index) %>
+<%= link "Back", to: idea_path(@conn, :index), class: "btn btn-default btn-xs"%>
 </div>

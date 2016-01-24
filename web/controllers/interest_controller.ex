@@ -11,7 +11,7 @@ defmodule RnlHackathon.InterestController do
     RnlHackathon.Repo.insert!(changeset)
 
     conn
-    |> put_flash(:info, "You are now interested in " <> idea.name )
+    |> put_flash(:info, "You are now interested in helping with " <> idea.name )
     |> redirect(to: idea_path(conn, :index))
   end
 
@@ -21,7 +21,7 @@ defmodule RnlHackathon.InterestController do
     Repo.delete!(interest)
 
     conn
-    |> put_flash(:info, "You are no longer interested in " <> idea.name )
+    |> put_flash(:info, "You are no longer interested in helping with " <> idea.name )
     |> redirect(to: idea_path(conn, :index))
   end
 end
