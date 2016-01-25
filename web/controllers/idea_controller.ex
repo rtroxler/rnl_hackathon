@@ -29,6 +29,7 @@ defmodule RnlHackathon.IdeaController do
 
     case Repo.insert(changeset) do
       {:ok, _idea} ->
+        RnlHackathon.Endpoint.broadcast!("ideas:index", "ideas_changed", %{idea: idea_params})
         conn
         |> put_flash(:info, "Idea created successfully.")
         |> redirect(to: idea_path(conn, :index))
@@ -77,6 +78,7 @@ defmodule RnlHackathon.IdeaController do
     # it to always work (and if it does not, it will raise).
     Repo.delete!(idea)
 
+    RnlHackathon.Endpoint.broadcast!("ideas:index", "ideas_changed", %{})
     conn
     |> put_flash(:info, "Idea deleted successfully.")
     |> redirect(to: idea_path(conn, :index))

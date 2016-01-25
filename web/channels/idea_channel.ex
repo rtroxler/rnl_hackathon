@@ -8,7 +8,6 @@ defmodule RnlHackathon.IdeaChannel do
   end
 
   def handle_in("new_vote", %{"body" => body}, socket) do
-    require IEx
     user_id = socket.assigns[:user]
     idea_id = body["idea_id"]
 
@@ -28,10 +27,5 @@ defmodule RnlHackathon.IdeaChannel do
     # have handle_out listen for vote_count_update, and in socket.js listen for that and update the idea's vote value
     {:noreply, socket}
   end
-
-  #def handle_out("new_vote", payload, socket) do
-    #push socket, "new_vote", payload
-    #{:noreply, socket}
-  #end
 
 end

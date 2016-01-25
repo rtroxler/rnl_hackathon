@@ -88,6 +88,10 @@ channel.on("vote_count_update", payload => {
   $("#idea-"+idea_id).text(payload["vote_count"])
 })
 
+channel.on("ideas_changed", payload => {
+  $('.alert-warning').html("Your page is out of date, would you like to <a href='/'>Refresh?</a>").show();
+})
+
 channel.join()
   .receive("ok", resp => {})
   .receive("error", resp => { console.log("Unable to join", resp) })
