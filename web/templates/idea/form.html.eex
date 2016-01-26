@@ -13,8 +13,9 @@
 
   <div class="form-group">
     <%= label f, :description, class: "control-label" %>
-    <%= textarea f, :description, class: "form-control" %>
+    <%= textarea f, :description, class: "form-control", rows: "9" %>
     <%= error_tag f, :description %>
+    <p class="help-block">Description supports Markdown, try it out!</p>
   </div>
 
   <%= if logged_in?(@conn) do %>

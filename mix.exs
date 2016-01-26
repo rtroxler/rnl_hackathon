@@ -37,6 +37,7 @@ defmodule RnlHackathon.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
+     {:earmark, "~> 0.1.13"},
      {:passport, git: "https://github.com/rtroxler/passport.git"}
    ]
   end

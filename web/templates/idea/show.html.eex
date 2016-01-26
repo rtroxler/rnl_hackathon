@@ -3,7 +3,7 @@
 </h2>
 
 <div>
-  <%= @idea.description %>
+  <%= raw @idea_description %>
 </div>
 
 </br>
@@ -26,7 +26,6 @@
   </div>
 <% end %>
 
-<%# If there are any interested users, display them here  %>
 <%# Any comments here %>
 
 <div>

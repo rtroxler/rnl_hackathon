@@ -47,6 +47,7 @@ defmodule RnlHackathon.IdeaController do
     users = Repo.all(query)
 
     conn
+    |> assign(:idea_description, Earmark.to_html(idea.description))
     |> assign(:interested_users, users)
     |> render(:show, idea: idea)
   end
