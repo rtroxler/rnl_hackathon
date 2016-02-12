@@ -7,8 +7,11 @@ defmodule RnlHackathon.InterestController do
   def create(conn, %{"idea_id" => idea_id}) do
     idea = Repo.get!(Idea, idea_id)
 
-    changeset = Interest.changeset(%Interest{}, %{ user_id: current_user(conn).id, idea_id: idea_id })
-    RnlHackathon.Repo.insert!(changeset)
+    # Kinda hacky, but prevents double posting Interests
+    case RnlHackathon.Repo.get_by(Interest, user_id: current_user(conn).id, idea_id: idea.id) do
+      nil -> RnlHackathon.Repo.insert!(Interest.changeset(%Interest{}, %{ user_id: current_user(conn).id, idea_id: idea_id }))
+      interest -> ""
+    end
 
     conn
     |> put_flash(:info, "You are now interested in helping with " <> idea.name )
