@@ -15,7 +15,7 @@ defmodule RnlHackathon.RegistrationController do
     #require IEx
     #IEx.pry
     case RegistrationManager.register(registration_params) do
-      {:ok, changeset} -> conn
+      {:ok, _changeset} -> conn
          |> put_flash(:info, "Registration success")
          |> login(registration_params)
       {:error, changeset}-> conn
@@ -25,7 +25,7 @@ defmodule RnlHackathon.RegistrationController do
 
   def login(conn, params) do
     case SessionManager.login(conn, params) do
-      {:ok, conn, user} ->
+      {:ok, conn, _user} ->
         conn
         |> put_flash(:info, "Logged in")
         |> redirect(to: idea_path(conn, :index))

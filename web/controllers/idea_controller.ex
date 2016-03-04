@@ -1,7 +1,6 @@
 defmodule RnlHackathon.IdeaController do
   use RnlHackathon.Web, :controller
   import Passport.SessionManager, only: [current_user: 1, logged_in?: 1]
-  import Logger
 
   alias RnlHackathon.Idea
 
@@ -14,6 +13,19 @@ defmodule RnlHackathon.IdeaController do
     end
 
     query = from i in Idea, where: is_nil(i.completed_at)
+    ideas = Repo.all(query) |> Repo.preload([:user, :votes])
+    conn
+    |> assign(:user_token, token)
+    |> render(:index, ideas: ideas)
+  end
+
+  def completed_index(conn, _params) do
+    token = case current_user(conn) do
+      false -> nil
+      user -> Phoenix.Token.sign(conn, "user socket", user.id)
+    end
+
+    query = from i in Idea, where: not(is_nil(i.completed_at))
     ideas = Repo.all(query) |> Repo.preload([:user, :votes])
     conn
     |> assign(:user_token, token)

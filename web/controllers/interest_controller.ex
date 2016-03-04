@@ -10,7 +10,7 @@ defmodule RnlHackathon.InterestController do
     # Kinda hacky, but prevents double posting Interests
     case RnlHackathon.Repo.get_by(Interest, user_id: current_user(conn).id, idea_id: idea.id) do
       nil -> RnlHackathon.Repo.insert!(Interest.changeset(%Interest{}, %{ user_id: current_user(conn).id, idea_id: idea_id }))
-      interest -> ""
+      _interest -> ""
     end
 
     conn
@@ -18,7 +18,7 @@ defmodule RnlHackathon.InterestController do
     |> redirect(to: idea_path(conn, :index))
   end
 
-  def delete(conn, %{"idea_id" => idea_id, "id" => id}) do
+  def delete(conn, %{"idea_id" => idea_id, "id" => _id}) do
     idea = Repo.get!(Idea, idea_id)
     interest = Repo.get_by(Interest, %{user_id: current_user(conn).id, idea_id: idea_id})
     Repo.delete!(interest)
