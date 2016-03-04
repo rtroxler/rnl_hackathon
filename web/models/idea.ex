@@ -7,6 +7,9 @@ defmodule RnlHackathon.Idea do
   schema "ideas" do
     field :name, :string
     field :description, :string
+    field :completed_at, Ecto.DateTime
+    field :completed_by_id, :integer
+
     belongs_to :user, RnlHackathon.User
     has_many :votes, RnlHackathon.Vote, on_delete: :delete_all
     has_many :interests, RnlHackathon.Interest, on_delete: :delete_all
@@ -15,7 +18,7 @@ defmodule RnlHackathon.Idea do
   end
 
   @required_fields ~w(name description user_id)
-  @optional_fields ~w()
+  @optional_fields ~w(completed_at completed_by_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

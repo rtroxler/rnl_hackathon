@@ -1,9 +1,9 @@
 defmodule RnlHackathon.IdeaController do
   use RnlHackathon.Web, :controller
   import Passport.SessionManager, only: [current_user: 1, logged_in?: 1]
+  import Logger
 
   alias RnlHackathon.Idea
-  alias RnlHackathon.Interest
 
   plug :scrub_params, "idea" when action in [:create, :update]
 
@@ -13,7 +13,8 @@ defmodule RnlHackathon.IdeaController do
       user -> Phoenix.Token.sign(conn, "user socket", user.id)
     end
 
-    ideas = Idea |> Repo.all |> Repo.preload [:user, :votes]
+    query = from i in Idea, where: is_nil(i.completed_at)
+    ideas = Repo.all(query) |> Repo.preload([:user, :votes])
     conn
     |> assign(:user_token, token)
     |> render(:index, ideas: ideas)
@@ -39,7 +40,7 @@ defmodule RnlHackathon.IdeaController do
   end
 
   def show(conn, %{"id" => id}) do
-    idea = Idea |> Repo.get!(id) |> Repo.preload [:user, :interests]
+    idea = Idea |> Repo.get!(id) |> Repo.preload([:user, :interests, :votes])
 
     query = from(int in assoc(idea, :interests),
                  left_join: user in assoc(int, :user),
@@ -83,5 +84,21 @@ defmodule RnlHackathon.IdeaController do
     conn
     |> put_flash(:info, "Idea deleted successfully.")
     |> redirect(to: idea_path(conn, :index))
+  end
+
+  def mark_complete(conn, %{"idea_id" => id}) do
+    idea = Repo.get!(Idea, id)
+
+    changeset = Idea.changeset(idea, %{"completed_at" => :calendar.local_time,
+                                       "completed_by_id" => current_user(conn).id})
+
+    case Repo.update(changeset) do
+      {:ok, idea} ->
+        conn
+        |> put_flash(:info, "Idea has been marked completed.")
+        |> redirect(to: idea_path(conn, :show, idea))
+      {:error, changeset} ->
+        render(conn, "edit.html", idea: idea, changeset: changeset)
+    end
   end
 end

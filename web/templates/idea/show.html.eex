@@ -13,6 +13,17 @@
   <%= @idea.user.name %>
 </div>
 
+<%= if @idea.completed_at do %>
+  </br>
+  <h3>Completed</h3>
+  <div>
+    <em>Marked completed by <%= completed_user @idea.completed_by_id %> on <%= @idea.completed_at %></em>
+  </div>
+
+  <div>
+  </div>
+<% end %>
+
 </br>
 
 <%= if @interested_users != [] do %>

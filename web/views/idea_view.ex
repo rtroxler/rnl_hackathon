@@ -31,4 +31,9 @@ defmodule RnlHackathon.IdeaView do
                   class: "btn btn-primary btn-xs"
     end
   end
+
+  def completed_user user_id do
+    user = RnlHackathon.Repo.get!(RnlHackathon.User, user_id)
+    user.name
+  end
 end
