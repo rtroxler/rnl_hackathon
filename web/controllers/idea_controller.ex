@@ -16,6 +16,7 @@ defmodule RnlHackathon.IdeaController do
     ideas = Repo.all(query) |> Repo.preload([:user, :votes])
     conn
     |> assign(:user_token, token)
+    |> assign(:completed, false)
     |> render(:index, ideas: ideas)
   end
 
@@ -29,6 +30,7 @@ defmodule RnlHackathon.IdeaController do
     ideas = Repo.all(query) |> Repo.preload([:user, :votes])
     conn
     |> assign(:user_token, token)
+    |> assign(:completed, true)
     |> render(:index, ideas: ideas)
   end
 

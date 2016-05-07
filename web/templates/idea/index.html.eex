@@ -4,6 +4,11 @@
   <span class='title'>Hackathon Ideas</span>
     <span class="pull-right">
   <%= if logged_in?(@conn) do %>
+    <%= if @completed do %>
+      <%= link "View Uncompleted Ideas", to: idea_path(@conn, :index), class: "btn btn-link btn-s"%>
+    <% else %>
+      <%= link "View Completed Ideas", to: idea_path(@conn, :completed_index), class: "btn btn-link btn-s"%>
+    <% end %>
       <%= link "New idea", to: idea_path(@conn, :new), class: "btn btn-primary btn-s"%>
     <% else %>
       <p class='title-tip'>Log in or register to create and vote on ideas!</p>
