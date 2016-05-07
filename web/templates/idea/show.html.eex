@@ -44,4 +44,13 @@
   <%= link "Edit", to: idea_path(@conn, :edit, @idea) %>
 <% end %>
 <%= link "Back", to: idea_path(@conn, :index), class: "btn btn-default btn-xs"%>
-</div>
+<%= if !@idea.completed_at do %>
+  <%= link "Mark Complete",
+      to: idea_path(@conn,
+      :mark_complete,
+      @idea),
+      method: :put,
+      data: [confirm: "You are about to mark someone else's idea as completed. Are you sure you should be doing this?"],
+      class: "btn btn-xs btn-info" %>
+  </div>
+<% end %>
