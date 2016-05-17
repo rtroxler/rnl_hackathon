@@ -12,11 +12,10 @@ defmodule RnlHackathon.IdeaController do
       user -> Phoenix.Token.sign(conn, "user socket", user.id)
     end
 
-    query = from i in Idea, where: is_nil(i.completed_at)
+    query = from i in Idea, where: is_nil(i.completed_at), where: is_nil(i.archived_at)
     ideas = Repo.all(query) |> Repo.preload([:user, :votes])
     conn
     |> assign(:user_token, token)
-    |> assign(:completed, false)
     |> render(:index, ideas: ideas)
   end
 
@@ -30,8 +29,20 @@ defmodule RnlHackathon.IdeaController do
     ideas = Repo.all(query) |> Repo.preload([:user, :votes])
     conn
     |> assign(:user_token, token)
-    |> assign(:completed, true)
-    |> render(:index, ideas: ideas)
+    |> render(:completed, ideas: ideas)
+  end
+
+  def archived_index(conn, _params) do
+    token = case current_user(conn) do
+      false -> nil
+      user -> Phoenix.Token.sign(conn, "user socket", user.id)
+    end
+
+    query = from i in Idea, where: not(is_nil(i.archived_at))
+    ideas = Repo.all(query) |> Repo.preload([:user, :votes])
+    conn
+    |> assign(:user_token, token)
+    |> render(:archive, ideas: ideas)
   end
 
   def new(conn, _params) do
@@ -110,6 +121,34 @@ defmodule RnlHackathon.IdeaController do
       {:ok, idea} ->
         conn
         |> put_flash(:info, "Idea has been marked completed.")
+        |> redirect(to: idea_path(conn, :show, idea))
+      {:error, changeset} ->
+        render(conn, "edit.html", idea: idea, changeset: changeset)
+    end
+  end
+
+  def archive(conn, %{"idea_id" => id}) do
+    idea = Repo.get!(Idea, id)
+    changeset = Idea.changeset(idea, %{"archived_at" => :calendar.local_time})
+
+    case Repo.update(changeset) do
+      {:ok, idea} ->
+        conn
+        |> put_flash(:info, "Idea has been marked archived.")
+        |> redirect(to: idea_path(conn, :show, idea))
+      {:error, changeset} ->
+        render(conn, "edit.html", idea: idea, changeset: changeset)
+    end
+  end
+
+  def unarchive(conn, %{"idea_id" => id}) do
+    idea = Repo.get!(Idea, id)
+    changeset = Idea.changeset(idea, %{"archived_at" => nil})
+
+    case Repo.update(changeset) do
+      {:ok, idea} ->
+        conn
+        |> put_flash(:info, "Idea has been marked archived.")
         |> redirect(to: idea_path(conn, :show, idea))
       {:error, changeset} ->
         render(conn, "edit.html", idea: idea, changeset: changeset)

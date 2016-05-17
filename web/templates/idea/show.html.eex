@@ -44,7 +44,7 @@
   <%= link "Edit", to: idea_path(@conn, :edit, @idea) %>
 <% end %>
 <%= link "Back", to: idea_path(@conn, :index), class: "btn btn-default btn-xs"%>
-<%= if !@idea.completed_at do %>
+<%= if !@idea.completed_at && !@idea.archived_at && logged_in?(@conn) do %>
   <%= link "Mark Complete",
       to: idea_path(@conn,
       :mark_complete,
@@ -52,5 +52,21 @@
       method: :put,
       data: [confirm: "You are about to mark someone else's idea as completed. Are you sure you should be doing this?"],
       class: "btn btn-xs btn-info" %>
-  </div>
+
+  <%= link "Archive",
+      to: idea_path(@conn,
+      :archive,
+      @idea),
+      method: :put,
+      data: [confirm: "Are you sure?"],
+      class: "btn btn-xs btn-warning" %>
+<% end %>
+
+<%= if @idea.archived_at && logged_in?(@conn) do %>
+  <%= link "Unarchive",
+      to: idea_path(@conn,
+      :unarchive,
+      @idea),
+      method: :put,
+      class: "btn btn-xs btn-info" %>
 <% end %>

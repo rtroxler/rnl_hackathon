@@ -19,7 +19,10 @@ defmodule RnlHackathon.Router do
     get "/", IdeaController, :index
 
     put "/ideas/:idea_id/complete", IdeaController, :mark_complete
+    put "/ideas/:idea_id/archive", IdeaController, :archive
+    put "/ideas/:idea_id/unarchive", IdeaController, :unarchive
     get "/ideas/completed", IdeaController, :completed_index
+    get "/ideas/archived", IdeaController, :archived_index
     resources "/ideas", IdeaController do
       resources "interests", InterestController, only: [:create, :delete]
     end

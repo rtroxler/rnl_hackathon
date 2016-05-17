@@ -1,23 +1,23 @@
 <p class="alert alert-warning" role="alert"></p>
 
 <div>
-    <ul class="nav nav-tabs">
-      <span class='title'>Hackathon Ideas</span>
-        <%= if logged_in?(@conn) do %>
-          <li class="pull-right">
-            <%= link "New idea", to: idea_path(@conn, :new), class: "btn btn-primary btn-s"%>
+      <ul class="nav nav-tabs">
+        <span class='title'>Hackathon Ideas</span>
+          <%= if logged_in?(@conn) do %>
+            <li class="pull-right">
+              <%= link "New idea", to: idea_path(@conn, :new), class: "btn btn-primary btn-s"%>
+            </li>
+          <% end %>
+          <li class="pull-right active">
+            <%= link "Archive", to: idea_path(@conn, :archived_index), class: "btn btn-link btn-s"%>
           </li>
-        <% end %>
-        <li class="pull-right">
-          <%= link "Archive", to: idea_path(@conn, :archived_index), class: "btn btn-link btn-s"%>
-        </li>
-        <li class="pull-right">
-          <%= link "Completed", to: idea_path(@conn, :completed_index), class: "btn btn-link btn-s"%>
-        </li>
-        <li class="pull-right active">
-          <%= link "Current", to: idea_path(@conn, :index), class: "btn btn-link btn-s"%>
-        </li>
-    </ul>
+          <li class="pull-right">
+            <%= link "Completed", to: idea_path(@conn, :completed_index), class: "btn btn-link btn-s"%>
+          </li>
+          <li class="pull-right">
+            <%= link "Current", to: idea_path(@conn, :index), class: "btn btn-link btn-s"%>
+          </li>
+      </ul>
 </div>
 
 <table class="table">
@@ -34,15 +34,7 @@
     <%= for idea <- Enum.sort(@ideas, &(Idea.vote_count(&1) > Idea.vote_count(&2))) do %>
 
     <tr class="idea-row">
-      <%= if logged_in?(@conn) do %>
-        <td class="vote-col">
-          <div class='vote-buttons'>
-            <button type="button" class="<%= class_for_vote_buttons(idea.id, current_user(@conn).id, 1) %> fa fa-arrow-up" data-button='{"idea_id": <%= idea.id %>, "value": 1}'></button>
-          </div>
-        </td>
-      <% else %>
           <td></td>
-      <% end %>
       <td class="vote-col"><span id="idea-<%= idea.id %>"><%= Idea.vote_count(idea) %></span></td>
       <td class="name-col"><%= idea.name %></td>
       <td align="center">
