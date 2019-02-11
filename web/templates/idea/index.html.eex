@@ -1,13 +1,11 @@
 <p class="alert alert-warning" role="alert"></p>
-
+<%= if logged_in?(@conn) do %>
 <div>
     <ul class="nav nav-tabs">
       <span class='title'>Hackathon Ideas</span>
-        <%= if logged_in?(@conn) do %>
           <li class="pull-right">
             <%= link "New idea", to: idea_path(@conn, :new), class: "btn btn-primary btn-s"%>
           </li>
-        <% end %>
         <li class="pull-right">
           <%= link "Archive", to: idea_path(@conn, :archived_index), class: "btn btn-link btn-s"%>
         </li>
@@ -64,4 +62,4 @@
     <% end %>
   </tbody>
 </table>
-
+<% end %>

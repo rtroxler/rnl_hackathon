@@ -36,7 +36,6 @@ config :phoenix, :stacktrace_depth, 20
 config :rnl_hackathon, RnlHackathon.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
   database: "rnl_hackathon_dev",
   hostname: "localhost",
   pool_size: 10

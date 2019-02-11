@@ -40,8 +40,6 @@ form.link, form.button {
   height: 71px;
   display: inline-block;
   margin-bottom: 1em;
-  background-image: url("/images/rnl_logo.png");
-  background-size: 519px 71px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
