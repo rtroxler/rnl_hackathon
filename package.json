@@ -1,7 +1,7 @@
 {
   "repository": {},
   "scripts": {
-    "deploy": "echo 'deploying'"
+    "deploy": "brunch build --production"
   },
   "dependencies": {
     "babel-brunch": "^6.0.0",
