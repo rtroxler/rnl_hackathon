@@ -1,7 +1,3 @@
 info "Building Phoenix static assets"
 
-cd assets
-brunch build --production
-
-cd ..
 mix phx.digest
