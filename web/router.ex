@@ -24,7 +24,7 @@ defmodule RnlHackathon.Router do
     get "/ideas/completed", IdeaController, :completed_index
     get "/ideas/archived", IdeaController, :archived_index
     resources "/ideas", IdeaController do
-      resources "interests", InterestController, only: [:create, :delete]
+      resources "/interests", InterestController, only: [:create, :delete]
     end
 
     # For Passport

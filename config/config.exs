@@ -5,6 +5,9 @@
 # is restricted to this project.
 use Mix.Config
 
+config :rnl_hackathon,
+  ecto_repos: [RnlHackathon.Repo]
+
 # Configures the endpoint
 config :rnl_hackathon, RnlHackathon.Endpoint,
   url: [host: "localhost"],

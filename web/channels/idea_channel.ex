@@ -3,7 +3,7 @@ defmodule RnlHackathon.IdeaChannel do
   alias RnlHackathon.Vote
   alias RnlHackathon.Idea
 
-  def join("ideas:index", params, socket) do
+  def join("ideas:index", _params, socket) do
     {:ok, socket.assigns[:user], socket}
   end
 

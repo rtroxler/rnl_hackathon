@@ -7,15 +7,15 @@ defmodule RnlHackathon.Idea do
   schema "ideas" do
     field :name, :string
     field :description, :string
-    field :completed_at, Ecto.DateTime
+    field :completed_at, :naive_datetime
     field :completed_by_id, :integer
-    field :archived_at, Ecto.DateTime
+    field :archived_at, :naive_datetime
 
     belongs_to :user, RnlHackathon.User
     has_many :votes, RnlHackathon.Vote, on_delete: :delete_all
     has_many :interests, RnlHackathon.Interest, on_delete: :delete_all
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(name description user_id)

@@ -5,7 +5,7 @@ defmodule RnlHackathon.Interest do
     belongs_to :user, RnlHackathon.User
     belongs_to :idea, RnlHackathon.Idea
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(user_id idea_id)

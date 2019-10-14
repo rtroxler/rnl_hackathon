@@ -6,7 +6,7 @@ defmodule RnlHackathon.User do
     field :crypted_password, :string
     field :name, :string
 
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(email name)

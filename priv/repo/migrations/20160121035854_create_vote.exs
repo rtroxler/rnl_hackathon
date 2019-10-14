@@ -6,6 +6,7 @@ defmodule RnlHackathon.Repo.Migrations.CreateVote do
       add :value, :string
       add :user_id, references(:users, on_delete: :nothing)
       add :idea_id, references(:ideas, on_delete: :nothing)
+      add :vote_value, :integer
 
       timestamps
     end

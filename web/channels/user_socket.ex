@@ -31,7 +31,7 @@ defmodule RnlHackathon.UserSocket do
     case Phoenix.Token.verify(socket, "user_id", token, max_age: 1209600) do
       {:ok, user_id} ->
         {:ok, assign(socket, :user, user_id)}
-      {:error, reason} ->
+      {:error, _reason} ->
         :error
     end
   end

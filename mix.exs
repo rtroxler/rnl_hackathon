@@ -9,8 +9,8 @@ defmodule RnlHackathon.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     aliases: aliases,
-     deps: deps]
+     aliases: aliases(),
+      deps: deps()]
   end
 
   # Configuration for the OTP application.
@@ -30,15 +30,17 @@ defmodule RnlHackathon.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.2"},
-     {:phoenix_ecto, "~> 2.0"},
+    [{:phoenix, "~> 1.4.10"},
+     {:phoenix_ecto, "~> 3.2"},
+     {:ecto_sql, "~> 3.1"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 2.3"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"},
-     {:earmark, "~> 0.1.13"},
-     {:passport, git: "https://github.com/rtroxler/passport.git"}
+     {:phoenix_html, "~> 2.11"},
+     {:phoenix_live_reload, "~> 1.2", only: :dev},
+     {:poison, "~> 2.0"},
+     {:gettext, "~> 0.11"},
+     {:plug_cowboy, "~> 1.0"},
+     {:earmark, "~> 1.4.2"},
+     {:passport, git: "https://github.com/rtroxler/passport.git", branch: 'phx_1.4'}
    ]
   end
 
